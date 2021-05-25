@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".t-t").click(function () {
+                console.log("qererqw");
+            });
+
+        });
+        function qqq() {
+            $('.q2').show();
+        }
+    </script>
+    <style type="text/css">
+        .q1,.q2{
+            color: #4caf50;
+        }
+        .test tr td{
+            width: 450px;
+            line-height:18px;
+            text-align: left;
+            padding: 0px 10px;
+        }
+        .test{
+            margin: 2% auto;
+            background: yellow;
+        }
+    </style>
+</head>
+<body>
+    <a class="t-t">风纪扣大数据</a>
+        <input type="button" onclick="qqq()" value="點擊">
+        <span class="q1"> zhou</span>
+        <span class="q2" style="display: none"> quan</span>
+        <p >采集方式</p>
+        <table class="test">
+            <tr>
+                <th>
+                    内采集
+                </th>
+                <th>
+                    外采集
+                </th>
+            </tr>
+            <tr>
+                    <td>
+                        文字一文字一文字一文字一文字一文字一
+                        文字一文字一文字一文字一文字一文字一文字一文字一文字一
+                        文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一文字一
+                    </td>
+                    <td>
+                        文字一文字一文字一文字一文字一文字一
+                        文字一文字一文字一文字一文字一文字一文字一文字一文字一
+                        文字一文字一文字一文字一文字一文字
+                    </td>
+                </tr>
+        </table>
+
+    </div>
+</body>
+</html>

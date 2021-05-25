@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="author" content="PR" />
+<meta name="copyright" content="PR" />
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<title>HTML5仿当当网手机端搜索框条件筛选代码</title>
+<link rel="stylesheet" media="screen" href="css/style.css" />
+
+<script src="js/jquery-1.10.1.min.js"></script>
+<script src="js/jquery.filter.js"></script>
+</head>
+<body>
+<!--顶部-->
+<!--筛选-->
+	<header class="wap-header">
+<!--		<a id="filtrateBackContains" class="wap-header-back wap-header-l" href="javascript:void(0)"></a>-->
+<!--		<h1>筛选</h1>-->
+		<section class="wap-search">
+			<form method="post">
+				<div class="wap-search-text">
+					<input id="text" type="text" placeholder="" />
+				</div>
+				<input type="submit" value="" />
+			</form>
+			<div id="word" th:fragment="keyword">
+
+				<div class="click_work" th:each="keyword:${keywords}">
+					<span th:text="${keyword.keyword}" th:name="${keyword.type}" onclick="getAttack(this)"></span>
+				</div>
+				<div class="click_work" th:if="${keywords} eq null">
+					<span>noetttt</span>
+				</div>
+			</div>
+		</section>
+	</header>
+	<article class="filtrate-cont">
+
+		<div id="address" class="filtrate-category">
+			<a href="javascript:void(0)">
+				攻击类别<span>全部展开</span>
+			</a>
+		</div>
+		<div class="filtrate-address">
+			<ul class="attack-type">
+				<li th:each="attackType:${attackTypeList}"><a href="javascript:void(0)" th:text="${attackType.getTypeName()}" th:id="${attackType.getId()}"></a></li>
+			</ul>
+		</div>
+
+		<div id="phase" class="filtrate-category">
+			<a href="javascript:void(0)">
+				攻击方式<span>全部展开</span>
+			</a>
+		</div>
+		<div class="filtrate-address">
+			<ul class="attack-method">
+				<li th:each="attackPhase:${attackPhaseList}"><a href="javascript:void(0)" th:text="${attackPhase.getMethodName()}" th:id="${attackPhase.getId()}"></a></li>
+			</ul>
+		</div>
+		<div id="attacks" th:fragment="attacks">
+			<div class="cardBox" th:each="attack:${attacks}">
+				<div class="headerBox" style="background-color: #4caf50;">
+						<a title="查看详情" style="cursor: pointer; color:white" th:id="${attack.id}" th:text="${attack.name}" onclick="getDetail(this)"></a>
+				</div>
+				<div class="bodyBox">
+					<p>攻击类别：<span th:text="${attack.typeName}"/></p>
+					<p>攻击方式：
+						<a href="javascript:void(0)" class="label label-success" style="border-radius: .25em;" th:text="${attack.methodName}"></a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="gather" th:fragment="gather">
+			<div th:each="detail:${details}">
+				<div class="gather-text" th:text="${detail.methodName}"></div>
+				<table class="method" border="1">
+					<tr>
+						<th>
+							内采集
+						</th>
+						<th>
+							外采集
+						</th>
+					</tr>
+					<tr>
+						<td th:text="${detail.intBand}" >
+						</td>
+						<td th:text="${detail.outBand}">
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!--		<div class="filtrate-other">-->
+<!--			<h2>其他条件</h2>-->
+<!--			<ul class="clearfix">-->
+<!--				<li><label>促销</label></li>-->
+<!--				<li><label>尾品汇</label></li>-->
+<!--				<li><label>自营</label></li>-->
+<!--				<li class="active"><label>有货</label></li>-->
+<!--				<li><label>预售</label></li>-->
+<!--				<li><label>海外购</label></li>-->
+<!--			</ul>-->
+<!--		</div>-->
+	</article>
+<!--	<footer class="filtrate-footer">-->
+<!--		<ul class="filtrate-btn clearfix">-->
+<!--			<li><input class="filtrate-reset" type="button" value="清空筛选条件"></li>-->
+<!--			<li><input class="filtrate-submit" type="button" value="确定"></li>-->
+<!--		</ul>-->
+<!--	</footer>-->
+
+<!--<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">-->
+<!--<p>适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>-->
+<!--<p>来源：<a href="http://www.lanrenzhijia.com/" target="_blank">懒人素材</a></p>-->
+<!--</div>-->
+</body>
+</html>
