@@ -57,8 +57,8 @@ a.wap-header-back { background-size: .5rem; }
 .filtrate-price { padding: 0 15px; /*border-top: 1px solid #dcdcdc;*/ border-bottom: 1px solid #dcdcdc; background-color: #fff; line-height: 45px; color: #646464; }
 .filtrate-price input { width: 78px; height: 26px; padding: 3px 0; border: 1px solid #d8dbde; margin: 0 5px; background-color: #ebf0f3; text-align: center; line-height: 18px; color: #989da2; }
 .filtrate-price input:focus { border-color: #f88b39; background-color: #fff; outline: none; }
-/*收货地*/
-.filtrate-address { height: 121px; overflow: hidden; }
+/*攻击方式*/
+.filtrate-address { height: 100px; overflow: hidden; }
 .filtrate-address ul { padding: 10px 0 5px 10px; }
 .filtrate-address li { float: left; width: 220px; height: 40px; padding: 1px; border: 1px solid #d8dbde; margin: 0 7px 5px 0; overflow: hidden; background-color: #fff; }
 .filtrate-address li.active { padding: 0; border: 2px solid #f88b39; }
@@ -103,24 +103,33 @@ input.filtrate-submit { border: 1px solid #ff9600; background-color: #ff9600; co
     margin-left: 5px;
 }
 
+/*详情表格*/
 .method tr td{
     width: 500px;
     line-height:18px;
     text-align: left;
-    padding: 0px 10px;
+    padding: 20px 20px;
+}
+.method tr th{
+    width: 500px;
+    line-height:18px;
+    text-align: center;
+    padding: 20px 20px;
 }
 .method{
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     border-collapse: collapse;
-    background: floralwhite;
+    background: #fff  no-repeat right -97px;
     /*border: 1px solid black;*/
 }
 
+/*带内采集文字*/
 .gather-text{
-    text-align: center;
+    text-align:left;
     text-decoration: underline blue;
     padding-bottom: 10px;
-    color: blue;
+    color: black;
+    background: #fff  no-repeat right -97px; background-size: 25px 193px; line-height: 44px; color: #646464;
 }
 #word{
     position: absolute;
@@ -168,7 +177,7 @@ input.filtrate-submit { border: 1px solid #ff9600; background-color: #ff9600; co
     width: 55%;
     height: 65%;
     padding: 20px;
-    border: 10px solid orange;
+    /*border: 10px solid orange;*/
     background-color: white;
     z-index:1002;
     overflow: auto;

@@ -181,6 +181,10 @@ function stripscript(s) {
 	return rs;
 }
 
+function test() {
+	console.log("qwer")
+}
+
 function popup(dom) {
 	// 显示遮罩
 	let method = dom.innerHTML;

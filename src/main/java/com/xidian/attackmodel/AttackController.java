@@ -47,7 +47,6 @@ public class AttackController {
 
     @RequestMapping("/attack/getKeyWord")
     public String getKeyWord(Model model, String keyword) {
-        System.out.println(keyword);
         List<KeyWordVO> keyWords = dataBaseConfig.getDataBase().getKeyWord(keyword);
         model.addAttribute("keywords",keyWords);
         return "index::keyword";

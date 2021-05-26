@@ -11,7 +11,7 @@
 <meta name="copyright" content="PR" />
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<title>HTML5仿当当网手机端搜索框条件筛选代码</title>
+<title>攻击模型查询</title>
 <link rel="stylesheet" media="screen" href="css/style.css" />
 
 <script src="js/jquery-1.10.1.min.js"></script>
@@ -26,17 +26,18 @@
 		<section class="wap-search">
 			<form method="post">
 				<div class="wap-search-text">
-					<input id="text" type="text" placeholder="" />
+					<input id="text" type="text" placeholder=""  onkeydown="if(event.keyCode==13) {test()}"/>
 				</div>
 				<input type="submit" value="" />
 			</form>
-			<div id="word" th:fragment="keyword">
-
-				<div class="click_work" th:each="keyword:${keywords}">
-					<span th:text="${keyword.keyword}" th:name="${keyword.type}" onclick="getAttack(this)"></span>
-				</div>
-				<div class="click_work" th:if="${keywords} eq null">
-					<span>noetttt</span>
+			<div id="word">
+				<div  th:fragment="keyword">
+					<div class="click_work" th:each="keyword:${keywords}">
+						<span th:text="${keyword.keyword}" th:name="${keyword.type}" onclick="getAttack(this)"></span>
+					</div>
+<!--					<div class="click_work" th:if="${keywords} ne null">-->
+<!--						数据不存在-->
+<!--					</div>-->
 				</div>
 			</div>
 		</section>
@@ -79,7 +80,10 @@
 		</div>
 		<div class="gather" th:fragment="gather">
 			<div th:each="detail:${details}">
-				<div class="gather-text" th:text="${detail.methodName}" onclick="popup(this)" title="点击查看详情"></div>
+				<div class="filtrate-category">
+					<a href="javascript:void(0)" th:text="${detail.methodName}" onclick="popup(this)" title="点击查看详情" style="text-decoration: underline black;">
+					</a>
+				</div>
 				<table class="method" border="1">
 					<tr>
 						<th>
@@ -106,7 +110,7 @@
 
 <div id="popup">
 	<div th:fragment="popup" th:each="datamethod:${datamethods}">
-		<img th:src="'img/'+${datamethod.picRemark}" >
+		<img th:src="'/img/'+${datamethod.picRemark}" >
 		<div style="margin-top: 10px">
 			<span  th:text="${datamethod.wordRemark}"></span>
 		</div>
