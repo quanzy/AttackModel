@@ -1,9 +1,10 @@
 $(function() {
 	/**筛选**/
 	/*进入筛选*/
-	$('#attacks').hide()
-	$('.gather').hide()
-	$('#word').hide()
+	$('#attacks').hide();
+	$('.gather').hide();
+	$('#word').hide();
+	//$('#popup').hide();
 
 	$("#headerFiltrate").click(function() {
 		$("#header").hide();
@@ -87,67 +88,67 @@ $(function() {
 	});
 
 	/*收起&展开收货地区*/
-	$("#address a").click(function() {
-		var categoryState = $(this).find("span").html();
-		var addressHeight = $(".filtrate-address ul").css("height");
-		if (categoryState != "收起") {//展开收货地区
-			$("#address").addClass("show");
-			$("#address a span").html("收起");
-			$(".filtrate-address").animate({height: addressHeight});
-		} else {//收起收货地区
-			$("#address").removeClass("show");
-			if (address == "") {//未选收货地
-				address = "全部";
-			}
-			$("#address a span").html(address);
-			$(".filtrate-address").animate({height: 0});
-		}
-	});
-	/*选择其他条件*/
-	$(".filtrate-other li label").click(function() {
-		var otherLi = $(this).parent("li");
-		var conditionState = otherLi.hasClass("active");
-		if (conditionState == true) {
-			otherLi.removeClass("active");
-		} else {
-			otherLi.addClass("active");
-		}
-	});
-	/*清空筛选条件*/
-	$(".filtrate-reset").click(function() {
-		/*清空分类*/
-		$("#classify").removeClass("show");
-		$("#classify a span").html("展开");
-		classify = $(".filtrate-classify-list li.active>a").html();
-		$(".filtrate-classify-list li").removeClass("active");
-		$(".filtrate-classify-list>li").addClass("active");
-		$(".filtrate-classify-list li ul li ul").hide();
-		/*收起分类*/
-		classifyHeight = parseInt($(".filtrate-classify").css("height"));	
-		if (classifyHeight > 0) {
-			$(".filtrate-classify").animate({height: 0});
-		}
-		/*清空价格*/
-		$("#minPrice, #maxPrice").val("");
-		/*清空收货地*/
-		$("#address").removeClass("show");
-		$("#address a span").html("展开");
-		address = "";
-		/*收起收货地*/
-		var addressBoxHeight = parseInt($(".filtrate-address ul").css("height"));
-		if (addressBoxHeight > 0) {
-			$(".filtrate-address").animate({height: 0});
-		}
-		/*清空已选收货地*/
-		$(".filtrate-address ul li").removeClass("active");
-		/*清空其他选项*/
-		$(".filtrate-other ul li").removeClass("active");
-	});
-	/*从筛选返回主体页面*/
-	$("#filtrateBackContains, .filtrate-submit").click(function() {
-		$("#header").show();
-		$("#filtratePage").hide();
-	});
+	// $("#address a").click(function() {
+	// 	var categoryState = $(this).find("span").html();
+	// 	var addressHeight = $(".filtrate-address ul").css("height");
+	// 	if (categoryState != "收起") {//展开收货地区
+	// 		$("#address").addClass("show");
+	// 		$("#address a span").html("收起");
+	// 		$(".filtrate-address").animate({height: addressHeight});
+	// 	} else {//收起收货地区
+	// 		$("#address").removeClass("show");
+	// 		if (address == "") {//未选收货地
+	// 			address = "全部";
+	// 		}
+	// 		$("#address a span").html(address);
+	// 		$(".filtrate-address").animate({height: 0});
+	// 	}
+	// });
+	// /*选择其他条件*/
+	// $(".filtrate-other li label").click(function() {
+	// 	var otherLi = $(this).parent("li");
+	// 	var conditionState = otherLi.hasClass("active");
+	// 	if (conditionState == true) {
+	// 		otherLi.removeClass("active");
+	// 	} else {
+	// 		otherLi.addClass("active");
+	// 	}
+	// });
+	// /*清空筛选条件*/
+	// $(".filtrate-reset").click(function() {
+	// 	/*清空分类*/
+	// 	$("#classify").removeClass("show");
+	// 	$("#classify a span").html("展开");
+	// 	classify = $(".filtrate-classify-list li.active>a").html();
+	// 	$(".filtrate-classify-list li").removeClass("active");
+	// 	$(".filtrate-classify-list>li").addClass("active");
+	// 	$(".filtrate-classify-list li ul li ul").hide();
+	// 	/*收起分类*/
+	// 	classifyHeight = parseInt($(".filtrate-classify").css("height"));
+	// 	if (classifyHeight > 0) {
+	// 		$(".filtrate-classify").animate({height: 0});
+	// 	}
+	// 	/*清空价格*/
+	// 	$("#minPrice, #maxPrice").val("");
+	// 	/*清空收货地*/
+	// 	$("#address").removeClass("show");
+	// 	$("#address a span").html("展开");
+	// 	address = "";
+	// 	/*收起收货地*/
+	// 	var addressBoxHeight = parseInt($(".filtrate-address ul").css("height"));
+	// 	if (addressBoxHeight > 0) {
+	// 		$(".filtrate-address").animate({height: 0});
+	// 	}
+	// 	/*清空已选收货地*/
+	// 	$(".filtrate-address ul li").removeClass("active");
+	// 	/*清空其他选项*/
+	// 	$(".filtrate-other ul li").removeClass("active");
+	// });
+	// /*从筛选返回主体页面*/
+	// $("#filtrateBackContains, .filtrate-submit").click(function() {
+	// 	$("#header").show();
+	// 	$("#filtratePage").hide();
+	// });
 
 });
 
@@ -165,17 +166,34 @@ function getAttack(dom) {
 	let type = dom.getAttribute("name");
 	let url = "/attack/getAttack?keyword="+keyword+"&type="+type;
 	console.log(url);
-	$('#attacks').show()
+	$('.gather').hide();
+	$(".filtrate-address ul li").removeClass("active");
+	$('#attacks').show();
 	$('#attacks').load(url);
 }
 
 function stripscript(s) {
-	var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）&mdash;—|{}【】‘；：”“'。，、？\\d|a-zA-Z]")
+	var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）&mdash;—|{}【】‘；：”“'。，、？\\d]")
 	var rs = "";
 	for (var i = 0; i < s.length; i++) {
 		rs = rs + s.substr(i, 1).replace(pattern, '');
 	}
 	return rs;
+}
+
+function popup(dom) {
+	// 显示遮罩
+	let method = dom.innerHTML;
+	let url = "/attack/datamethod?method="+method;
+	console.log(url);
+	$('#popup').show();
+	$('#popup').load(url);
+	$('#fade').show();
+}
+
+function popdown(dom) {
+	$('#fade').hide();
+	$('#popup').hide();
 }
 
 

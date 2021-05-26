@@ -1,5 +1,9 @@
 package com.xidian.attackmodel;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +14,9 @@ import java.util.List;
  * @Description:
  */
 public class AttackDB {
-
     // MySQL 8.0 以下版本 - JDBC 驱动名及数据库 URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/attack_model";
-
     // MySQL 8.0 以上版本 - JDBC 驱动名及数据库 URL
     //static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     //static final String DB_URL = "jdbc:mysql://localhost:3306/RUNOOB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
@@ -138,7 +140,7 @@ public class AttackDB {
     }
 
     public List<AttackVO> getData(int id) {
-        String sql = "select data_method,out_band_id,in_band_id,name from attack where id = "+id;
+        String sql = "select data_method,out_band_id,in_band_id,name,remark from attack where id = "+id;
         List<AttackVO> attackVOS = new ArrayList<>();
         Statement statement;
         ResultSet resultSet;
@@ -152,31 +154,42 @@ public class AttackDB {
             String inBand;
             String outBand;
             String name;
+            String remark;
             while (resultSet.next()) {
                 dataMethod = resultSet.getString(1);
                 inBand = resultSet.getString(2);
                 name = resultSet.getString(4);
+                remark = resultSet.getString(5);
                 StringBuilder inBandString = new StringBuilder();
                 StringBuilder outBandString = new StringBuilder();
                 if (inBand != null && !"".equals(inBand)) {
-                    sql1 = "select name from datas where id in ("+inBand+")";
+                    if(inBand.equals("all")){
+                        sql1 = "select name from datas";
+                    }else{
+                        sql1 = "select name from datas where id in ("+inBand+")";
+                    }
                     Statement statement1 = conn.createStatement();
                     resultSet1 = statement1.executeQuery(sql1);
 
                     while (resultSet1.next()) {
-                        inBandString.append(resultSet1.getString(1)).append(";");
+                        inBandString.append(resultSet1.getString(1)).append("; ");
                     }
                 }
                 outBand = resultSet.getString(3);
                 if (outBand != null && !"".equals(outBand)) {
-                    sql1 = "select name from datas where id in ("+outBand+")";
+                    if(outBand.equals("all")){
+                        sql1 = "select name from datas";
+                    }else{
+                        sql1 = "select name from datas where id in ("+outBand+")";
+                    }
                     Statement statement2 = conn.createStatement();
                     resultSet2 = statement2.executeQuery(sql1);
                     while (resultSet2.next()) {
-                        outBandString.append(resultSet2.getString(1)).append(";");
+                        outBandString.append(resultSet2.getString(1)).append("; ");
                     }
                 }
-                attackVOS.add(new AttackVO(id,name,dataMethod,inBandString.toString(),outBandString.toString()));
+
+                attackVOS.add(new AttackVO(id,name,dataMethod,inBandString.toString(),outBandString.toString(),remark));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -248,6 +261,30 @@ public class AttackDB {
             e.printStackTrace();
         }
         return attackVOS;
+    }
+
+    public List<DataMethod> getDataMethodByMethod(String method) {
+        String sql = "select * from data_method where data_method ='"+method+"'";
+        List<DataMethod> dataMethodList = new ArrayList<>();
+        Statement statement;
+        ResultSet resultSet;
+        try {
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery(sql);
+            int id;
+            String wordRemark;
+            String picRemark;
+            while (resultSet.next()) {
+                id = resultSet.getInt(1);
+                method = resultSet.getString(2);
+                wordRemark = resultSet.getString(3);
+                picRemark = resultSet.getString(4);
+                dataMethodList.add(new DataMethod(id,method,wordRemark,picRemark));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dataMethodList;
     }
 
     public static void main(String[] args) {

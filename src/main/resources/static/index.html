@@ -45,7 +45,7 @@
 
 		<div id="address" class="filtrate-category">
 			<a href="javascript:void(0)">
-				攻击类别<span>全部展开</span>
+				攻击类别
 			</a>
 		</div>
 		<div class="filtrate-address">
@@ -56,7 +56,7 @@
 
 		<div id="phase" class="filtrate-category">
 			<a href="javascript:void(0)">
-				攻击方式<span>全部展开</span>
+				攻击方式
 			</a>
 		</div>
 		<div class="filtrate-address">
@@ -79,7 +79,7 @@
 		</div>
 		<div class="gather" th:fragment="gather">
 			<div th:each="detail:${details}">
-				<div class="gather-text" th:text="${detail.methodName}"></div>
+				<div class="gather-text" th:text="${detail.methodName}" onclick="popup(this)" title="点击查看详情"></div>
 				<table class="method" border="1">
 					<tr>
 						<th>
@@ -95,21 +95,28 @@
 						<td th:text="${detail.outBand}">
 						</td>
 					</tr>
+					<tr th:if="${detail.remark} ne null">
+						<td colspan="2" th:text="${detail.remark}">
+						</td>
+					</tr>
 				</table>
 			</div>
 		</div>
-<!--		<div class="filtrate-other">-->
-<!--			<h2>其他条件</h2>-->
-<!--			<ul class="clearfix">-->
-<!--				<li><label>促销</label></li>-->
-<!--				<li><label>尾品汇</label></li>-->
-<!--				<li><label>自营</label></li>-->
-<!--				<li class="active"><label>有货</label></li>-->
-<!--				<li><label>预售</label></li>-->
-<!--				<li><label>海外购</label></li>-->
-<!--			</ul>-->
-<!--		</div>-->
 	</article>
+
+<div id="popup">
+	<div th:fragment="popup" th:each="datamethod:${datamethods}">
+		<img th:src="'img/'+${datamethod.picRemark}" >
+		<div style="margin-top: 10px">
+			<span  th:text="${datamethod.wordRemark}"></span>
+		</div>
+		<div style="margin-top: 20px">
+			<a href = "javascript:void(0)" onclick = "popdown(this)" style="text-decoration: underline;color: blue">关闭窗口</a>
+		</div>
+	</div>
+</div>
+<div id="fade" class="black_overlay"></div>
+
 <!--	<footer class="filtrate-footer">-->
 <!--		<ul class="filtrate-btn clearfix">-->
 <!--			<li><input class="filtrate-reset" type="button" value="清空筛选条件"></li>-->

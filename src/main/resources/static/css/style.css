@@ -31,7 +31,8 @@ a.wap-header-back { background-size: .5rem; }
 .filtrate-cont { padding-bottom: 74px; border-top: 1px solid #ddd; }
 /*分类*/
 .filtrate-category { border-bottom: 1px solid #dcdcdc; }
-.filtrate-category a { display: block; padding: 0 15px; background: #fff url(../img/filter-sprite.png) no-repeat right -97px; background-size: 25px 193px; line-height: 44px; color: #646464; }
+/*url(../img/filter-sprite.png) background 属性下 #fff旁 下拉图标*/
+.filtrate-category a { display: block; padding: 0 15px; background: #fff  no-repeat right -97px; background-size: 25px 193px; line-height: 44px; color: #646464; }
 .filtrate-category.show a { background-position: right -51px; }
 .filtrate-category a span { float: right; max-width: 60%; margin-right: 20px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .filtrate-classify { height: 184px; overflow: hidden; }
@@ -117,7 +118,9 @@ input.filtrate-submit { border: 1px solid #ff9600; background-color: #ff9600; co
 
 .gather-text{
     text-align: center;
+    text-decoration: underline blue;
     padding-bottom: 10px;
+    color: blue;
 }
 #word{
     position: absolute;
@@ -142,4 +145,36 @@ input.filtrate-submit { border: 1px solid #ff9600; background-color: #ff9600; co
 .error{
     color: gray;
     cursor:pointer;/*鼠标放上变成小手*/
+}
+
+.black_overlay{
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index:1001;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=88);
+}
+#popup {
+    display: none;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 55%;
+    height: 65%;
+    padding: 20px;
+    border: 10px solid orange;
+    background-color: white;
+    z-index:1002;
+    overflow: auto;
+    text-align: center;
+}
+#popup img{
+    max-width:100%;
+    max-height:100%;
 }

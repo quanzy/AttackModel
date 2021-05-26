@@ -13,6 +13,7 @@ public class AttackVO {
     String dataMethod;
     String outBand;
     String intBand;
+    String remark;
 
     public AttackVO(int id, String name, String dataMethod) {
         this.id = id;
@@ -20,12 +21,13 @@ public class AttackVO {
         this.dataMethod = dataMethod;
     }
 
-    public AttackVO(int id, String name,String methodName, String intBand,String outBand) {
+    public AttackVO(int id, String name,String methodName, String intBand,String outBand,String remark) {
         this.id = id;
         this.name = name;
         this.methodName = methodName;
         this.intBand = intBand;
         this.outBand = outBand;
+        this.remark = remark;
     }
 
     public AttackVO(int id, String name, String typeName, String methodName) {
@@ -89,5 +91,13 @@ public class AttackVO {
 
     public void setIntBand(String intBand) {
         this.intBand = intBand;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

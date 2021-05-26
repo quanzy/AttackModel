@@ -1,5 +1,7 @@
 package com.xidian.attackmodel;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @Author: quan
@@ -15,6 +18,7 @@ import java.util.List;
  */
 @Controller
 public class AttackController {
+
     @RequestMapping("index")
     public ModelAndView getBasic() {
         ModelAndView modelAndView = new ModelAndView();
@@ -54,6 +58,13 @@ public class AttackController {
         return "index::attacks";
     }
 
+    //获得弹窗 中datamethod 信息
+    @RequestMapping("/attack/datamethod")
+    public String getDatamethod(Model model, String method) {
+        List<DataMethod> dataMethods = AttackDB.getInstance().getDataMethodByMethod(method);
+        model.addAttribute("datamethods", dataMethods);
+        return "index::popup";
+    }
 
     @RequestMapping("/attack")
     public String test() {
