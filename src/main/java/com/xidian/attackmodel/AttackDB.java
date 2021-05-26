@@ -1,9 +1,5 @@
 package com.xidian.attackmodel;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,44 +11,32 @@ import java.util.List;
  */
 public class AttackDB {
     // MySQL 8.0 以下版本 - JDBC 驱动名及数据库 URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/attack_model";
+    String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    String DB_URL;
     // MySQL 8.0 以上版本 - JDBC 驱动名及数据库 URL
     //static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     //static final String DB_URL = "jdbc:mysql://localhost:3306/RUNOOB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 
 
     // 数据库的用户名与密码，需要根据自己的设置
-    static final String USER = "root";
-    static final String PASS = "mysql";
-    static Connection conn;
-    private AttackDB(){}
-    private static AttackDB attackDB;
-
-    public static AttackDB getInstance() {
-        if (attackDB == null) {
-            synchronized (AttackDB.class) {
-                if (attackDB == null) {
-                    attackDB = new AttackDB();
-                    getConn();
-                }
-            }
-        }
-        return attackDB;
+   // @Value("${mysql.user}")
+    String USER;
+    //@Value("${mysql.password}")
+    String PASS;
+    Connection conn;
+    public AttackDB(){
     }
-    public static Connection getConn() {
-        Statement stmt = null;
+
+    public AttackDB(String driver, String url, String user, String password) {
         try {
             // 注册 JDBC 驱动
-            Class.forName(JDBC_DRIVER);
+            Class.forName(driver);
             // 打开链接
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn = DriverManager.getConnection(url, user, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return conn;
     }
-
     //获得所有的type
     public List<AttackType> getAllType() {
         List<AttackType> attackTypeList = new ArrayList<>();
@@ -288,66 +272,66 @@ public class AttackDB {
     }
 
     public static void main(String[] args) {
-        Connection conn = null;
-        Statement stmt = null;
-        try {
-            // 注册 JDBC 驱动
-            Class.forName(JDBC_DRIVER);
-
-            // 打开链接
-            System.out.println("连接数据库...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-            // 执行查询
-            System.out.println(" 实例化Statement对象...");
-            stmt = conn.createStatement();
-            String sql;
-            sql = "SELECT * from attack";
-            sql = "select a.id,a.name,t.name,p.name from attack a,attack_type t,attack_phase p " +
-                    "where type_id ="+1+" and t.id = type_id and p.id = method_id";
-            sql = "select data_method,out_band_id,in_band_id from attack where id = "+1;
-            ResultSet resultSet = stmt.executeQuery(sql);
-
-            String sql1;
-            ResultSet resultSet1;
-            String dataMethod;
-            String inBand;
-            String outBand;
-            while (resultSet.next()) {
-                dataMethod = resultSet.getString(1);
-                inBand = resultSet.getString(2);
-                sql1 = "select name from datas where id in ("+inBand+")";
-                Statement stmt1 = conn.createStatement();
-                resultSet1 = stmt1.executeQuery(sql1);
-                StringBuilder inBandString = new StringBuilder();
-                while (resultSet1.next()) {
-                    inBandString.append(resultSet1.getString(1)).append(";");
-                }
-                System.out.println(inBandString.toString());
-                outBand = resultSet.getString(3);
-            }
-            // 完成后关闭
-            resultSet.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException se) {
-            // 处理 JDBC 错误
-            se.printStackTrace();
-        } catch (Exception e) {
-            // 处理 Class.forName 错误
-            e.printStackTrace();
-        } finally {
-            // 关闭资源
-            try {
-                if (stmt != null) stmt.close();
-            } catch (SQLException se2) {
-            }// 什么都不做
-            try {
-                if (conn != null) conn.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-        }
-        System.out.println("Goodbye!");
+//        Connection conn = null;
+//        Statement stmt = null;
+//        try {
+//            // 注册 JDBC 驱动
+//            Class.forName(JDBC_DRIVER);
+//
+//            // 打开链接
+//            System.out.println("连接数据库...");
+//            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+//
+//            // 执行查询
+//            System.out.println(" 实例化Statement对象...");
+//            stmt = conn.createStatement();
+//            String sql;
+//            sql = "SELECT * from attack";
+//            sql = "select a.id,a.name,t.name,p.name from attack a,attack_type t,attack_phase p " +
+//                    "where type_id ="+1+" and t.id = type_id and p.id = method_id";
+//            sql = "select data_method,out_band_id,in_band_id from attack where id = "+1;
+//            ResultSet resultSet = stmt.executeQuery(sql);
+//
+//            String sql1;
+//            ResultSet resultSet1;
+//            String dataMethod;
+//            String inBand;
+//            String outBand;
+//            while (resultSet.next()) {
+//                dataMethod = resultSet.getString(1);
+//                inBand = resultSet.getString(2);
+//                sql1 = "select name from datas where id in ("+inBand+")";
+//                Statement stmt1 = conn.createStatement();
+//                resultSet1 = stmt1.executeQuery(sql1);
+//                StringBuilder inBandString = new StringBuilder();
+//                while (resultSet1.next()) {
+//                    inBandString.append(resultSet1.getString(1)).append(";");
+//                }
+//                System.out.println(inBandString.toString());
+//                outBand = resultSet.getString(3);
+//            }
+//            // 完成后关闭
+//            resultSet.close();
+//            stmt.close();
+//            conn.close();
+//        } catch (SQLException se) {
+//            // 处理 JDBC 错误
+//            se.printStackTrace();
+//        } catch (Exception e) {
+//            // 处理 Class.forName 错误
+//            e.printStackTrace();
+//        } finally {
+//            // 关闭资源
+//            try {
+//                if (stmt != null) stmt.close();
+//            } catch (SQLException se2) {
+//            }// 什么都不做
+//            try {
+//                if (conn != null) conn.close();
+//            } catch (SQLException se) {
+//                se.printStackTrace();
+//            }
+//        }
+//        System.out.println("Goodbye!");
     }
 }
